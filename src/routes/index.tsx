@@ -12,6 +12,12 @@ import { TeamCollaboration } from '../pages/team/teamcollaboration';
 import { ManageMembers } from '../pages/team/managemembers';
 import { TeamReport } from '../pages/team/teamreport';
 import { CompareTeams } from '../pages/team/compareteams';
+// lab cheif pages 
+import { LabDashboard } from '../pages/lab/labdashboard';
+import { ManageTeams } from '../pages/lab/manageteams';
+import { LabReport } from '../pages/lab/labreport';
+import { CompareLabs } from '../pages/lab/comparelabs';
+import { LabCollaboration } from '../pages/lab/labcollaboration';
 
 
 export const AppRoutes: React.FC = () => {
@@ -31,6 +37,14 @@ export const AppRoutes: React.FC = () => {
         <Route path="/team/report" element={<TeamReport />} />
         <Route path="/team/compare" element={<CompareTeams />} />
         <Route path="/team/settings" element={<Settings />} />
+         {/* Lab Chief Routes */}
+        <Route path="/lab/dashboard" element={<LabDashboard />} />
+        <Route path="/lab/manage-teams" element={<ManageTeams />} />
+        <Route path="/lab/report" element={<LabReport />} />
+        <Route path="/lab/compare" element={<CompareLabs />} />
+        <Route path="/lab/collaboration" element={<LabCollaboration />} />
+        <Route path="/lab/settings" element={<Settings />} />
+        
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </BrowserRouter>
