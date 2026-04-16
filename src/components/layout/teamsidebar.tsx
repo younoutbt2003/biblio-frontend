@@ -80,13 +80,17 @@ export const TeamSidebar: React.FC = () => {
         
         {/* Settings */}
         <div className="pt-4">
-          <Link
-            to="/team/settings"
-            className="flex items-center px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-          >
-            <Settings className="w-5 h-5 mr-3" />
-            Settings
-          </Link>
+        <Link
+          to="/team/settings" 
+          className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+            location.pathname === '/team/settings'
+              ? 'bg-primary-50 text-primary-600'
+              : 'text-gray-700 hover:bg-gray-100'
+          }`}
+        >
+          <Settings className="w-5 h-5 mr-3" />
+          Settings
+        </Link>
         </div>
       </nav>
 

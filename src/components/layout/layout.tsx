@@ -3,40 +3,35 @@ import { useLocation } from 'react-router-dom';
 import { Sidebar } from './sidebar';
 import { TeamSidebar } from './teamsidebar';
 import { LabSidebar } from './labsidebar';
-import { Header } from './header';
+import InstituteSidebar from '../institute/institutesidebar';
 
 interface LayoutProps {
   children: React.ReactNode;
-  title: string;
-  subtitle?: string;
 }
 
-export const Layout: React.FC<LayoutProps> = ({ children, title, subtitle }) => {
+export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
   
-  // Déterminer le sidebar selon la route
   const getSidebarComponent = () => {
-    if (location.pathname.startsWith('/lab')) {
-      return LabSidebar;
+    const path = location.pathname;
+    
+    if (path.startsWith('/institute')) {
+      return <InstituteSidebar />;
     }
-    if (location.pathname.startsWith('/team')) {
-      return TeamSidebar;
+    if (path.startsWith('/lab')) {
+      return <LabSidebar />;
     }
-    return Sidebar;
+    if (path.startsWith('/team')) {
+      return <TeamSidebar />;
+    }
+    return <Sidebar />;
   };
-  
-  const SidebarComponent = getSidebarComponent();
 
   return (
     <div className="flex h-screen bg-gray-50">
-      <SidebarComponent />
-      <div className="flex-1 ml-64 flex flex-col overflow-hidden">
-        <Header title={title} subtitle={subtitle} />
-        <main className="flex-1 overflow-auto">
-          <div className="p-6 space-y-8">
-            {children}
-          </div>
-        </main>
+      {getSidebarComponent()}
+      <div className="flex-1 overflow-auto">
+        {children}
       </div>
     </div>
   );

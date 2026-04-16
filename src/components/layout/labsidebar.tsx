@@ -18,7 +18,7 @@ const navigation = [
   { 
     section: 'Dashboards',
     items: [
-      { name: 'My Dashboard', href: '/dashboard', icon: LayoutDashboard },
+      { name: 'My Dashboard', href: '/lab/my-dashboard', icon: LayoutDashboard },
       { name: 'Team Dashboard', href: '/team/dashboard', icon: Users2 },
       { name: 'Lab Dashboard', href: '/lab/dashboard', icon: Building2 },
     ]
@@ -84,7 +84,11 @@ export const LabSidebar: React.FC = () => {
         <div className="pt-4">
           <Link
             to="/lab/settings"
-            className="flex items-center px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+            className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+              location.pathname === '/lab/settings'
+                ? 'bg-primary-50 text-primary-600'
+                : 'text-gray-700 hover:bg-gray-100'
+            }`}
           >
             <Settings className="w-5 h-5 mr-3" />
             Settings
