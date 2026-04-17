@@ -28,6 +28,8 @@ import { LabMyDashboard } from '../pages/lab/labmydashboard';
 import InstituteDashboard from '../pages/institute/institutedashboard';
 import InstituteManageLabs from '../pages/institute/institutemanagelabs';
 import InstituteReports from '../pages/institute/institutereports';
+import InstituteSettings from '../pages/institute/institutesettings';
+
 
 export const AppRoutes: React.FC = () => {
   return (
@@ -64,6 +66,7 @@ export const AppRoutes: React.FC = () => {
         <Route path="/institute/dashboard" element={<Layout><InstituteDashboard /></Layout>} />
         <Route path="/institute/manage-labs" element={<Layout><InstituteManageLabs /></Layout>} />
         <Route path="/institute/reports" element={<Layout><InstituteReports /></Layout>} />
+        <Route path="/institute/settings" element={<Layout><InstituteSettings /></Layout>} />
 
         {/* Default Route */}
         <Route path="/" element={<Navigate to="/login" replace />} /> </Routes>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Building2, 
   Users, 
@@ -7,10 +7,12 @@ import {
   Award,
   Activity,
   ArrowUpRight,
-  ArrowDownRight
+  ArrowDownRight,
+  Quote
 } from 'lucide-react';
 
 const InstituteDashboard: React.FC = () => {
+  const [hoveredLab, setHoveredLab] = useState<number | null>(null);
   const stats = [
     {
       label: 'Total Labs',
@@ -79,12 +81,57 @@ const InstituteDashboard: React.FC = () => {
   ];
 
   const topLabs = [
-    { name: 'AI Research Lab', director: 'Dr. Rachid Benali', teams: 8, researchers: 32, hIndex: 38.2, publications: 245 },
-    { name: 'Bioinformatics Lab', director: 'Dr. Amina Kaci', teams: 6, researchers: 24, hIndex: 35.7, publications: 198 },
-    { name: 'Computer Vision Lab', director: 'Dr. Mohamed Larbi', teams: 7, researchers: 28, hIndex: 34.1, publications: 187 },
-    { name: 'Cybersecurity Lab', director: 'Dr. Sarah Hamdi', teams: 5, researchers: 20, hIndex: 31.8, publications: 156 },
-    { name: 'Data Science Lab', director: 'Dr. Karim Mansouri', teams: 6, researchers: 26, hIndex: 30.2, publications: 142 },
-  ];
+  { 
+    id: 1,
+    name: 'AI Research Lab', 
+    director: 'Dr. Rachid Benali', 
+    teams: 8, 
+    researchers: 32, 
+    hIndex: 38.2, 
+    publications: 245,
+    citations: 8934 
+  },
+  { 
+    id: 2,
+    name: 'Bioinformatics Lab', 
+    director: 'Dr. Amina Kaci', 
+    teams: 6, 
+    researchers: 24, 
+    hIndex: 35.7, 
+    publications: 198,
+    citations: 7234  
+  },
+  { 
+    id: 3,
+    name: 'Computer Vision Lab', 
+    director: 'Dr. Mohamed Larbi', 
+    teams: 7, 
+    researchers: 28, 
+    hIndex: 34.1, 
+    publications: 187,
+    citations: 6892 
+  },
+  { 
+    id: 4,
+    name: 'Cybersecurity Lab', 
+    director: 'Dr. Sarah Hamdi', 
+    teams: 5, 
+    researchers: 20, 
+    hIndex: 31.8, 
+    publications: 156,
+    citations: 5423  
+  },
+  { 
+    id: 5,
+    name: 'Data Science Lab', 
+    director: 'Dr. Karim Mansouri', 
+    teams: 6, 
+    researchers: 26, 
+    hIndex: 30.2, 
+    publications: 142,
+    citations: 4987  
+  },
+];
 
   const recentActivities = [
     { action: 'New Lab Created', lab: 'Quantum Computing Lab', time: '2 hours ago', type: 'create' },
@@ -162,7 +209,7 @@ const InstituteDashboard: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Top Performing Labs */}
-        <div className="lg:col-span-2">
+         <div className="lg:col-span-2">
           <div className="bg-white rounded-xl shadow-sm border border-gray-100">
             <div className="p-6 border-b border-gray-100">
               <h2 className="text-xl font-bold text-gray-900">Top Performing Labs</h2>
@@ -171,27 +218,70 @@ const InstituteDashboard: React.FC = () => {
             <div className="p-6">
               <div className="space-y-4">
                 {topLabs.map((lab, index) => (
-                  <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                  <div 
+                    key={lab.id} 
+                    className="relative flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-all duration-200 cursor-pointer"
+                    onMouseEnter={() => setHoveredLab(lab.id)}
+                    onMouseLeave={() => setHoveredLab(null)}
+                  >
                     <div className="flex items-center gap-4">
                       <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
                         {index + 1}
                       </div>
                       <div>
                         <p className="font-semibold text-gray-900">{lab.name}</p>
-                        <p className="text-sm text-gray-600">{lab.director} • {lab.teams} teams • {lab.researchers} researchers</p>
+                        <p className="text-sm text-gray-600">
+                          {lab.director} • {lab.teams} teams • {lab.researchers} researchers
+                        </p>
                       </div>
                     </div>
                     <div className="text-right">
                       <p className="text-2xl font-bold text-blue-600">{lab.hIndex}</p>
                       <p className="text-xs text-gray-500">H-Index</p>
                     </div>
+
+                    {/* Tooltip au survol */}
+                    {hoveredLab === lab.id && (
+                      <div className="absolute left-0 right-0 -bottom-2 translate-y-full z-10 bg-white rounded-lg shadow-xl border border-gray-200 p-4 animate-fadeIn">
+                        <div className="grid grid-cols-3 gap-4">
+                          {/* Publications */}
+                          <div className="text-center">
+                            <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+                              <FileText className="w-5 h-5 text-green-600" />
+                            </div>
+                            <p className="text-xl font-bold text-gray-900">{lab.publications}</p>
+                            <p className="text-xs text-gray-600">Publications</p>
+                          </div>
+
+                          {/* Citations */}
+                          <div className="text-center">
+                            <div className="w-10 h-10 bg-cyan-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+                              <Quote className="w-5 h-5 text-cyan-600" />
+                            </div>
+                            <p className="text-xl font-bold text-gray-900">{lab.citations.toLocaleString()}</p>
+                            <p className="text-xs text-gray-600">Citations</p>
+                          </div>
+
+                          {/* H-Index */}
+                          <div className="text-center">
+                            <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+                              <Award className="w-5 h-5 text-purple-600" />
+                            </div>
+                            <p className="text-xl font-bold text-gray-900">{lab.hIndex}</p>
+                            <p className="text-xs text-gray-600">H-Index</p>
+                          </div>
+                        </div>
+
+                        {/* Petite flèche pointant vers le haut */}
+                        <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white border-l border-t border-gray-200 rotate-45"></div>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
             </div>
           </div>
         </div>
-
         {/* Recent Activities */}
         <div className="lg:col-span-1">
           <div className="bg-white rounded-xl shadow-sm border border-gray-100">
